@@ -1,6 +1,8 @@
 import { Controller, Get, Param, Post, Body, HttpCode, HttpStatus, Patch, Delete, Query } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
 import { Coffee } from './entities/coffee.entity';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 // import { Response } from 'express';
 
 @Controller('coffees')
@@ -23,16 +25,16 @@ export class CoffeesController {
 
   @Post()
   @HttpCode(HttpStatus.GONE)
-  create(@Body() body: { name: string }): string {
-    return body.name;
+  create(@Body() createCoffeeDto: CreateCoffeeDto): string {
+    return createCoffeeDto.name;
   }
 
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() body: { name: string },
+    @Body() updateCoffeeDto: UpdateCoffeeDto,
   ): string {
-    return `New name for ${id} is ${body.name}`;
+    return `New name for ${id} is ${updateCoffeeDto.name}`;
   }
 
   @Delete(':id')
