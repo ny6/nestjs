@@ -25,8 +25,8 @@ export class CoffeesController {
 
   @Post()
   @HttpCode(HttpStatus.GONE)
-  create(@Body() createCoffeeDto: CreateCoffeeDto): string {
-    return createCoffeeDto.name;
+  create(@Body() createCoffeeDto: CreateCoffeeDto): CreateCoffeeDto {
+    return createCoffeeDto;
   }
 
   @Patch(':id')
