@@ -1,8 +1,9 @@
-import { Controller, Get, Param, Post, Body, HttpCode, HttpStatus, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, HttpCode, HttpStatus, Patch, Delete, Query } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
 import { Coffee } from './entities/coffee.entity';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 // import { Response } from 'express';
 
 @Controller('coffees')
@@ -14,8 +15,8 @@ export class CoffeesController {
   // }
 
   @Get()
-  findAll(): Promise<Coffee[]> {
-    return this.coffeesService.findAll();
+  findAll(@Query() paginationQuery: PaginationQueryDto): Promise<Coffee[]> {
+    return this.coffeesService.findAll(paginationQuery);
   }
 
   @Get(':id')

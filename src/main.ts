@@ -9,6 +9,9 @@ async function bootstrap() {
     whitelist: true, // strip out unwanted values
     forbidNonWhitelisted: true, // throw an error if unwanted value received
     transform: true, // transform body to instance of dtos
+    transformOptions: {
+      enableImplicitConversion: true,
+    }
   }));
 
   await app.listen(3000);
