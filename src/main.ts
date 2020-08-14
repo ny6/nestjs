@@ -7,7 +7,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true, // strip out unwanted values
-    forbidNonWhitelisted: true,
+    forbidNonWhitelisted: true, // throw an error if unwanted value received
+    transform: true, // transform body to instance of dtos
   }));
 
   await app.listen(3000);
