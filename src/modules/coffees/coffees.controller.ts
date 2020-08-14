@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, HttpCode, HttpStatus, Patch, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, HttpCode, HttpStatus, Patch, Delete } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
 import { Coffee } from './entities/coffee.entity';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
@@ -14,32 +14,31 @@ export class CoffeesController {
   // }
 
   @Get()
-  findAll(@Query() { limit, offset }: { limit: number, offset: number }): Coffee[] {
+  findAll(): Promise<Coffee[]> {
     return this.coffeesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Coffee {
+  findOne(@Param('id') id: number): Promise<Coffee> {
     return this.coffeesService.findOne(id);
   }
 
   @Post()
   @HttpCode(HttpStatus.GONE)
-  create(@Body() createCoffeeDto: CreateCoffeeDto): CreateCoffeeDto {
-    console.log(createCoffeeDto instanceof CreateCoffeeDto);
-    return createCoffeeDto;
+  create(@Body() createCoffeeDto: CreateCoffeeDto): Promise<Coffee> {
+    return this.coffeesService.create(createCoffeeDto);
   }
 
   @Patch(':id')
   update(
     @Param('id') id: number,
     @Body() updateCoffeeDto: UpdateCoffeeDto,
-  ): string {
-    return `New name for ${id} is ${updateCoffeeDto.name}`;
+  ): Promise<Coffee> {
+    return this.coffeesService.update(id, updateCoffeeDto);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number): string {
-    return `${id} deleted!`;
+  delete(@Param('id') id: number): Promise<Coffee> {
+    return this.coffeesService.remove(id);
   }
 }
